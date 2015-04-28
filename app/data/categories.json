@@ -2,16 +2,19 @@
     {
         "id": 1,
         "name": "Fantasy",
-        "category": "Genre"
+        "category": "Genre",
+        "meta": "genre"
     },
     {
         "id": 2,
         "name": "Mystery",
-        "category": "Genre"
+        "category": "Genre",
+        "meta": "genre"
     },
     {
         "id": 3,
         "name": "Science Fiction",
-        "category": "Genre"
+        "category": "Genre",
+        "meta": "genre"
     }
 ]

@@ -11,13 +11,19 @@ var RestResource = angular.module('RestResource', [])
 		    url: '/data/categories.json'
 		  });
 		},
-		getAuthors: function () {
+		genre: function(){
 			return $http({
 				method: 'GET',
 				url: '/data/authors.json'
 			});
 		},
-		getBooks: function(){
+		author: function(){
+			return $http({
+				method: 'GET',
+				url: '/data/books.json'
+			});
+		},
+		book: function(){
 			return $http({
 				method: 'GET',
 				url: '/data/books.json'

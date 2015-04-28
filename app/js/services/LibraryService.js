@@ -5,9 +5,11 @@ var LibraryService = angular.module('LibraryService', [])
 .service('LibraryService', ['$http','$q', 'DataResource', function LibraryService($http, $q, DataResource) {
 
 	return {
-		selectedCategory: {},
-		selectedAuthor: {},
-		selectedItem: {},
+		selectedItem: {
+			genre: {},
+			author: {},
+			book: {}
+		},
 		filterData: function(dataset, id){
 			var selectedArray = []; 
 			angular.forEach(dataset, function (data) {
@@ -18,15 +20,15 @@ var LibraryService = angular.module('LibraryService', [])
 			});
 			return selectedArray;
 		},
-		selectCategory: function (category) {
-			this.selectedItem = category;
-			this.selectedCategory = category;
-			return DataResource.getAuthors(this.selectedItem.id).then(function(response){
-				return this.filterData(response.data, category.id);
-			}.bind(this));
+		getSelectedItem: function(){
+			return this.selectedItem;
 		},
-		getSelectedCategory: function () {
-			return this.selectedCategory;
+		getData: function (data){
+			var fn = DataResource[data.meta];
+			return fn().then(function(response){
+				this.selectedItem[data.meta] = data;
+				return this.filterData(response.data, data.id);
+			}.bind(this));
 		},
 		selectAuthor: function(author){
 			this.selectedItem = author;

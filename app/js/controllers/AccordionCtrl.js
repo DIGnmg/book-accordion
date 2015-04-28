@@ -2,24 +2,20 @@
 "use strict";
 
 var AccordionCtrl = function($scope, DataResource, LibraryService) {
-	
 
-	$scope.selectGenre = function (category){
-		$scope.books = {};
-		LibraryService.selectCategory(category).then(function(response){
-			$scope.selectedGenre = LibraryService.selectedCategory;
-			$scope.authors = response;
-		});
-	}
+	$scope.dataTierOne = {};
 
-	$scope.selectAuthor = function(author) {
-		LibraryService.selectAuthor(author).then(function(response){
-			$scope.selectedAuthor = LibraryService.selectedAuthor;
-			$scope.books = response;
+	$scope.selectItem = function(data) {
+		$scope.animate = false;
+		LibraryService.getData(data).then(function(response){
+			$scope.animate = true;
+			$scope.selectedItem = LibraryService.getSelectedItem();
+			$scope.data = response;
 		});
 	}
 
 	DataResource.getCategories().then(function(response){
+		$scope.animate = true;
 		$scope.data = response.data;
 	});
 };
