@@ -8,10 +8,6 @@ var ListDirective = angular.module('ListDirective', [])
 		templateUrl: 'templates/list-item.html',
 		transclude: true,
 		link: function($scope, el, attrs, controller) {
-			el.bind('click', function(){
-
-			});
-			console.log(attrs.listDirective);
 			attrs.listDirective = LibraryService.tabName;
 			LibraryService.setActiveTab(attrs.listDirective);
 		}

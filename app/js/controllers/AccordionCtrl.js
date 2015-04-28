@@ -16,15 +16,6 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		}
 	}
 
-	$scope.pickItem = function (data){
-		$scope.animate = false;
-		LibraryService.getData(data).then(function(response){
-			$scope.animate = true;
-			$scope.selectedItem = LibraryService.getSelectedItem();
-			$scope.data = response;
-		});
-	}
-
 	$scope.getGenres = function (){
 		$scope.animate = false;
 		LibraryService.getGenres().then(function(response){
@@ -46,7 +37,6 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		$scope.animate = true;
 		$scope.selectedItem = LibraryService.getSelectedItem();
 		$scope.activeTab = LibraryService.getActiveTab();
-		console.log($scope.activeTab);
 		$scope.data = response;
 	});
 };

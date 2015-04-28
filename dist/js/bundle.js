@@ -18,15 +18,6 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		}
 	}
 
-	$scope.pickItem = function (data){
-		$scope.animate = false;
-		LibraryService.getData(data).then(function(response){
-			$scope.animate = true;
-			$scope.selectedItem = LibraryService.getSelectedItem();
-			$scope.data = response;
-		});
-	}
-
 	$scope.getGenres = function (){
 		$scope.animate = false;
 		LibraryService.getGenres().then(function(response){
@@ -48,14 +39,13 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		$scope.animate = true;
 		$scope.selectedItem = LibraryService.getSelectedItem();
 		$scope.activeTab = LibraryService.getActiveTab();
-		console.log($scope.activeTab);
 		$scope.data = response;
 	});
 };
 
 module.exports = AccordionCtrl;
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/AccordionCtrl.js","/controllers")
-},{"Wb8Gej":15,"buffer":12}],2:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
@@ -82,37 +72,7 @@ var Accordion = angular.module('AccordionDirective', [])
 
 module.exports = Accordion;
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/directives/AccordionDirective.js","/directives")
-},{"Wb8Gej":15,"buffer":12}],3:[function(require,module,exports){
-(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
-/*globals angular, console */
-"use strict";
-
-var ItemDirective = angular.module('ItemDirective', [])
-.directive('itemDirective', ['$document', '$timeout', 'LibraryService', function itemDirective($document, $timeout, LibraryService) {
-  return {
-		restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-		link: function($scope, el, attrs, controller) {
-			el.bind('click', function(e){
-				console.log('BOOM!',el);
-				console.log('e!',e);
-				el.addClass('come-in');
-				attrs.$set('itemDirective', 'test')
-				console.log(attrs);
-				// ng-click="selectItem(data, activeTab)"
-				// LibraryService.getData(data).then(function(response){
-				// 	$scope.animate = true;
-				// 	$scope.selectedItem = LibraryService.getSelectedItem();
-				// 	$scope.data = response;
-				// });
-			});
-			console.log(attrs);
-		}
-	};
-}]);
-
-module.exports = ItemDirective;
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/directives/ItemDirective.js","/directives")
-},{"Wb8Gej":15,"buffer":12}],4:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
@@ -124,10 +84,6 @@ var ListDirective = angular.module('ListDirective', [])
 		templateUrl: 'templates/list-item.html',
 		transclude: true,
 		link: function($scope, el, attrs, controller) {
-			el.bind('click', function(){
-
-			});
-			console.log(attrs.listDirective);
 			attrs.listDirective = LibraryService.tabName;
 			LibraryService.setActiveTab(attrs.listDirective);
 		}
@@ -136,7 +92,7 @@ var ListDirective = angular.module('ListDirective', [])
 
 module.exports = ListDirective;
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/directives/ListDirective.js","/directives")
-},{"Wb8Gej":15,"buffer":12}],5:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
@@ -149,16 +105,15 @@ var ngAnimate = require('angular-animate');
 var AccordionCtrl = require('./controllers/AccordionCtrl');
 var AccordionDirective = require('./directives/AccordionDirective');
 var ListDirective = require('./directives/ListDirective');
-var ItemDirective = require('./directives/ItemDirective');
 var RestResource = require('./services/RestResource');
 var LibraryService = require('./services/LibraryService');
 
-var app = angular.module('myApp', [ngAnimate, AccordionDirective.name, ItemDirective.name, ListDirective.name, RestResource.name, LibraryService.name]);
+var app = angular.module('myApp', [ngAnimate, AccordionDirective.name, ListDirective.name, RestResource.name, LibraryService.name]);
 
 app.controller('AccordionCtrl', ['$scope', 'DataResource', 'LibraryService', AccordionCtrl]);
 
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_1023ce8.js","/")
-},{"./controllers/AccordionCtrl":1,"./directives/AccordionDirective":2,"./directives/ItemDirective":3,"./directives/ListDirective":4,"./services/LibraryService":6,"./services/RestResource":7,"Wb8Gej":15,"angular":11,"angular-animate":9,"buffer":12}],6:[function(require,module,exports){
+}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_9ad75f32.js","/")
+},{"./controllers/AccordionCtrl":1,"./directives/AccordionDirective":2,"./directives/ListDirective":3,"./services/LibraryService":5,"./services/RestResource":6,"Wb8Gej":14,"angular":10,"angular-animate":8,"buffer":11}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
@@ -178,7 +133,6 @@ var LibraryService = angular.module('LibraryService', [])
 				if (data.category_id === id){
 					selectedArray.push(data);
 				}
-				console.log(selectedArray);
 			});
 			return selectedArray;
 		},
@@ -207,12 +161,6 @@ var LibraryService = angular.module('LibraryService', [])
 				return this.filterData(response.data, data.id);
 			}.bind(this));
 		},
-		getBooks: function(){
-			return DataResource.getBooks().then(function(response){
-				this.setActiveTab(response.data[0].meta);
-				return response;
-			}.bind(this));
-		},
 		getGenres: function(){
 			return DataResource.getCategories().then(function(response){
 				this.setActiveTab(response.data[0].meta);
@@ -239,7 +187,7 @@ var LibraryService = angular.module('LibraryService', [])
 
 module.exports = LibraryService;
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/services/LibraryService.js","/services")
-},{"Wb8Gej":15,"buffer":12}],7:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
@@ -290,7 +238,7 @@ var RestResource = angular.module('RestResource', [])
 
 module.exports = RestResource;
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/services/RestResource.js","/services")
-},{"Wb8Gej":15,"buffer":12}],8:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * @license AngularJS v1.3.15
@@ -2431,13 +2379,13 @@ angular.module('ngAnimate', ['ng'])
 })(window, window.angular);
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-animate/angular-animate.js","/../../node_modules/angular-animate")
-},{"Wb8Gej":15,"buffer":12}],9:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular-animate/index.js","/../../node_modules/angular-animate")
-},{"./angular-animate":8,"Wb8Gej":15,"buffer":12}],10:[function(require,module,exports){
+},{"./angular-animate":7,"Wb8Gej":14,"buffer":11}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * @license AngularJS v1.3.15
@@ -28749,13 +28697,13 @@ var minlengthDirective = function() {
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular/angular.js","/../../node_modules/angular")
-},{"Wb8Gej":15,"buffer":12}],11:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./angular');
 module.exports = angular;
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/angular/index.js","/../../node_modules/angular")
-},{"./angular":10,"Wb8Gej":15,"buffer":12}],12:[function(require,module,exports){
+},{"./angular":9,"Wb8Gej":14,"buffer":11}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
  * The buffer module from node.js, for the browser.
@@ -29868,7 +29816,7 @@ function assert (test, message) {
 }
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/browserify/node_modules/buffer/index.js","/../../node_modules/browserify/node_modules/buffer")
-},{"Wb8Gej":15,"base64-js":13,"buffer":12,"ieee754":14}],13:[function(require,module,exports){
+},{"Wb8Gej":14,"base64-js":12,"buffer":11,"ieee754":13}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -29996,7 +29944,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js","/../../node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib")
-},{"Wb8Gej":15,"buffer":12}],14:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],13:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
@@ -30084,7 +30032,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 };
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js","/../../node_modules/browserify/node_modules/buffer/node_modules/ieee754")
-},{"Wb8Gej":15,"buffer":12}],15:[function(require,module,exports){
+},{"Wb8Gej":14,"buffer":11}],14:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // shim for using process in browser
 
@@ -30151,4 +30099,4 @@ process.chdir = function (dir) {
 };
 
 }).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../../node_modules/browserify/node_modules/process/browser.js","/../../node_modules/browserify/node_modules/process")
-},{"Wb8Gej":15,"buffer":12}]},{},[5])
+},{"Wb8Gej":14,"buffer":11}]},{},[4])

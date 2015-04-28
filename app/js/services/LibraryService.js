@@ -16,7 +16,6 @@ var LibraryService = angular.module('LibraryService', [])
 				if (data.category_id === id){
 					selectedArray.push(data);
 				}
-				console.log(selectedArray);
 			});
 			return selectedArray;
 		},
@@ -43,12 +42,6 @@ var LibraryService = angular.module('LibraryService', [])
 				this.selectedItem[data.meta] = data;
 				this.setActiveTab(response.data[0].meta);
 				return this.filterData(response.data, data.id);
-			}.bind(this));
-		},
-		getBooks: function(){
-			return DataResource.getBooks().then(function(response){
-				this.setActiveTab(response.data[0].meta);
-				return response;
 			}.bind(this));
 		},
 		getGenres: function(){
