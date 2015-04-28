@@ -5,9 +5,20 @@
 
 var AccordionCtrl = function($scope, DataResource, LibraryService) {
 
-	$scope.dataTierOne = {};
+	$scope.selectItem = function(data, tabName) {
+		if(LibraryService.getActiveTab() !== 'book'){
+			$scope.animate = false;
+			LibraryService.getData(data).then(function(response){
+				$scope.animate = true;
+				$scope.selectedItem = LibraryService.getSelectedItem();
+				$scope.data = response;
+			});
+		} else {
+			return;
+		}
+	}
 
-	$scope.selectItem = function(data) {
+	$scope.pickItem = function (data){
 		$scope.animate = false;
 		LibraryService.getData(data).then(function(response){
 			$scope.animate = true;
@@ -16,10 +27,36 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		});
 	}
 
-	DataResource.getCategories().then(function(response){
+	$scope.getGenres = function (){
+		$scope.animate = false;
+		LibraryService.getGenres().then(function(response){
+			$scope.animate = true;
+			$scope.data = response;
+		});
+	}
+	$scope.getAuthors = function (){
+		if(LibraryService.getActiveTab() === 'book'){
+			$scope.animate = false;
+			LibraryService.getAuthors().then(function(response){
+				$scope.animate = true;
+				$scope.data = response;
+			});
+		}
+	}
+	LibraryService.getGenres().then(function(response){
 		$scope.animate = true;
-		$scope.data = response.data;
+		$scope.selectedItem = LibraryService.getSelectedItem();
+		$scope.activeTab = LibraryService.getActiveTab();
+		console.log($scope.activeTab);
+		$scope.data = response;
 	});
+	// DataResource.getCategories().then(function(response){
+	// 	$scope.animate = true;
+	// 	$scope.selectedItem = LibraryService.getSelectedItem();
+	// 	$scope.activeTab = LibraryService.getActiveTab();
+	// 	console.log($scope.activeTab);
+	// 	$scope.data = response.data;
+	// });
 };
 
 module.exports = AccordionCtrl;
@@ -57,14 +94,24 @@ module.exports = Accordion;
 "use strict";
 
 var ItemDirective = angular.module('ItemDirective', [])
-.directive('itemDirective', ['$document', '$timeout' , function itemDirective($document, $timeout) {
+.directive('itemDirective', ['$document', '$timeout', 'LibraryService', function itemDirective($document, $timeout, LibraryService) {
   return {
 		restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
 		link: function($scope, el, attrs, controller) {
 			el.bind('click', function(e){
 				console.log('BOOM!',el);
+				console.log('e!',e);
 				el.addClass('come-in');
+				attrs.$set('itemDirective', 'test')
+				console.log(attrs);
+				// ng-click="selectItem(data, activeTab)"
+				// LibraryService.getData(data).then(function(response){
+				// 	$scope.animate = true;
+				// 	$scope.selectedItem = LibraryService.getSelectedItem();
+				// 	$scope.data = response;
+				// });
 			});
+			console.log(attrs);
 		}
 	};
 }]);
@@ -82,22 +129,13 @@ var ListDirective = angular.module('ListDirective', [])
 		restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
 		templateUrl: 'templates/list-item.html',
 		transclude: true,
-		link: function($scope, el, iAttrs, controller) {
-			// console.log('el', el);
-			// console.log('iAttrs', iAttrs);
-			// console.log(el.children());
-			$timeout(function(){
-				el.addClass('come-in');
-				// console.log(el.children());
-				// el.children().addClass('come-in');
-			}, 500);
-
+		link: function($scope, el, attrs, controller) {
 			el.bind('click', function(){
-				// LibraryService.remove();
-				// el.children().removeClass('come-in');
-				// el.children().addClass('come-out');
+
 			});
-			
+			console.log(attrs.listDirective);
+			attrs.listDirective = LibraryService.tabName;
+			LibraryService.setActiveTab(attrs.listDirective);
 		}
 	};
 }]);
@@ -125,7 +163,7 @@ var app = angular.module('myApp', [ngAnimate, AccordionDirective.name, ItemDirec
 
 app.controller('AccordionCtrl', ['$scope', 'DataResource', 'LibraryService', AccordionCtrl]);
 
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_bd6b5c32.js","/")
+}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17f23970.js","/")
 },{"./controllers/AccordionCtrl":1,"./directives/AccordionDirective":2,"./directives/ItemDirective":3,"./directives/ListDirective":4,"./services/LibraryService":6,"./services/RestResource":7,"Wb8Gej":15,"angular":11,"angular-animate":9,"buffer":12}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
@@ -136,9 +174,9 @@ var LibraryService = angular.module('LibraryService', [])
 
 	return {
 		selectedItem: {
-			genre: {},
-			author: {},
-			book: {}
+			genre: {name:"Genre"},
+			author: {name:"Author"},
+			book: {name:"Book"}
 		},
 		filterData: function(dataset, id){
 			var selectedArray = []; 
@@ -157,15 +195,33 @@ var LibraryService = angular.module('LibraryService', [])
 			var fn = DataResource[data.meta];
 			return fn().then(function(response){
 				this.selectedItem[data.meta] = data;
+				this.setActiveTab(response.data[0].meta);
 				return this.filterData(response.data, data.id);
 			}.bind(this));
 		},
-		selectAuthor: function(author){
-			this.selectedItem = author;
-			this.selectedAuthor = author;
-			return DataResource.getBooks(this.selectedItem.id).then(function(response){
-				return this.filterData(response.data, author.id);
+		getBooks: function(){
+			return DataResource.getBooks().then(function(response){
+				this.setActiveTab(response.data[0].meta);
+				return response;
 			}.bind(this));
+		},
+		getGenres: function(){
+			return DataResource.getCategories().then(function(response){
+				this.setActiveTab(response.data[0].meta);
+				return response.data;
+			}.bind(this));
+		},
+		getAuthors: function(){
+			return DataResource.getAuthors().then(function(response){
+				this.setActiveTab(response.data[0].meta);
+				return this.filterData(response.data, this.selectedItem.genre.id);
+			}.bind(this));
+		},
+		setActiveTab: function(name){
+			this.tabName = name;
+		},
+		getActiveTab: function(){
+			return this.tabName;
 		}
 	};
 
@@ -187,6 +243,18 @@ var RestResource = angular.module('RestResource', [])
 		    method: 'GET',
 		    url: '/data/categories.json'
 		  });
+		},
+		getAuthors: function(){
+			return $http({
+				method: 'GET',
+				url: '/data/authors.json'
+			});
+		},
+		getBooks: function(){
+			return $http({
+				method: 'GET',
+				url: '/data/books.json'
+			});
 		},
 		genre: function(){
 			return $http({

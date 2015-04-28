@@ -1,1 +1,1 @@
-<li class="module" ng-class="{enter:animate===true}" ng-click="selectItem(data)" ng-repeat="data in data track by $index">{{data.name}}</li>
+<li item-directive="" class="module" ng-class="{enter:animate===true}" ng-click="selectItem(data, activeTab)" ng-repeat="data in data track by $index">{{data.name}} {{activeTab}}</li>

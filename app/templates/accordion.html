@@ -1,12 +1,9 @@
-<div>
-	<head>{{selectedItem.genre.name}} > {{selectedItem.author.name}} > {{selectedItem.book.name}}</head>
-	<ul list-directive="" class="row">
-		<!-- <li item-directive='' class="module" ng-click="selectGenre(data)" ng-repeat="data in data track by $index">Genre: {{data.name}}</li> -->
+<div class="group">
+	<header class="crumbs">
+		<span class="link" ng-click="getGenres()">{{selectedItem.genre.name}} ></span>
+		<span class="link" ng-click="getAuthors()"">{{selectedItem.author.name}} ></span> 
+		<span class="link">{{selectedItem.book.name}}</span>
+	</header>
+	<ul list-directive="genre" class="row group">
 	</ul>
-<!-- 	<ul class="row">
-		<li item-directive='' class="module" ng-click="selectAuthor(author)" ng-repeat="author in authors track by $index">Author: {{author.name}}</li>
-	</ul>
-	<ul class="row">
-		<li item-directive='' class="module" ng-repeat="book in books track by $index">Book: {{book.name}}</li>
-	</ul> -->
 </div>

@@ -18,6 +18,7 @@
     "gulp-rimraf": "~0.1.0",
     "gulp-sass": "~0.7.1",
     "gulp-util": "~2.2.14",
+    "node-bourbon": "^4.2.1-beta1",
     "tiny-lr": "0.0.7"
   },
   "engines": {

@@ -48,9 +48,24 @@ gulp.task('styles', function() {
   // The onerror handler prevents Gulp from crashing when you make a mistake in your SASS
   .pipe(sass({onError: function(e) { console.log(e); } }))
   // Optionally add autoprefixer
+  .pipe(sass({
+      // includePaths: require('node-bourbon').with('other/path', 'another/path') 
+      // - or - 
+      includePaths: require('node-bourbon').includePaths
+  }))
   .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
   // These last two should look familiar now :)
   .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('sass', function () {
+  gulp.src('path/to/input.scss')
+    .pipe(sass({
+      // includePaths: require('node-bourbon').with('other/path', 'another/path') 
+      // - or - 
+      includePaths: require('node-bourbon').includePaths
+    }))
+    .pipe(gulp.dest('path/to/output.css'));
 });
 
 // Browserify task
