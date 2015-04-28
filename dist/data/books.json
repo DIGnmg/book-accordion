@@ -1,0 +1,158 @@
+[
+	{	
+		"id": 1,
+		"name": "14th Deadly Sin",
+		"author_id": 1,
+		"author_name": "James Patterson"
+	},
+	{
+		"id": 2,
+		"name": "Hope to Die",
+		"author_id": 1,
+		"author_name": "James Patterson"
+	},
+	{
+		"id": 3,
+		"name": "NYPD Red 3",
+		"author_id": 1,
+		"author_name": "James Patterson"
+	},
+	{
+		"id": 4,
+		"name": "The Burning Room",
+		"author_id": 2,
+		"author_name": "Michael Connelly"
+	},
+	{
+		"id": 5,
+		"name": "The Crossing",
+		"author_id": 2,
+		"author_name": "Michael Connelly"
+	},
+	{
+		"id": 6,
+		"name": "A Darkness More Than Night",
+		"author_id": 2,
+		"author_name": "Michael Connelly"
+	},
+	{
+		"id": 7,
+		"name": "Refusal",
+		"author_id": 3,
+		"author_name": "Dick Francis"
+	},            
+	{
+		"id": 8,
+		"name": "Damage",
+		"author_id": 3,
+		"author_name": "Dick Francis"
+	},            
+	{
+		"id": 9,
+		"name": "The Edge",
+		"author_id": 3,
+		"author_name": "Dick Francis"
+	},            
+	{
+		"id": 10,
+		"name": "The Hobbit; or, There and Back Again",
+		"author_id": 4,
+		"author_name": "J.R.R Tolkien"
+	},
+	{
+		"id": 11,
+		"name": "Unfinished Tales: The Lost Lore of Middle-earth",
+		"author_id": 4,
+		"author_name": "J.R.R Tolkien"
+	},
+	{
+		"id": 12,
+		"name": "The Lord of The Rings",
+		"author_id": 4,
+		"author_name": "J.R.R Tolkien"
+	},
+	{
+		"id": 13,
+		"name": "A Game of Thrones",
+		"author_id": 5,
+		"author_name": "George R. R. Martin"
+	},
+	{
+		"id": 14,
+		"name": "A Clash of Kings",
+		"author_id": 5,
+		"author_name": "George R. R. Martin"
+	},
+	{
+		"id": 15,
+		"name": "A Dance with Dragons",
+		"author_id": 5,
+		"author_name": "George R. R. Martin"
+	},
+	{
+		"id": 16,
+		"name": "The Way of Kings",
+		"author_id": 6,
+		"author_name": "Brandon Sanderson"
+	},
+	{
+		"id": 17,
+		"name": "Words of Radiance",
+		"author_id": 6,
+		"author_name": "Brandon Sanderson"
+	},
+	{
+		"id": 18,
+		"name": "Mistborn",
+		"author_id": 6,
+		"author_name": "Brandon Sanderson"
+	},
+	{
+		"id": 19,
+		"name": "The Atlantis Gene: A Thriller",
+		"author_id": 7,
+		"author_name": "A.G. Riddle"
+	},
+	{
+		"id": 20,
+		"name": "The Atlantis Plague: A Thriller",
+		"author_id": 7,
+		"author_name": "A.G. Riddle"
+	},
+	{
+		"id": 21,
+		"name": "Departure",
+		"author_id": 7,
+		"author_name": "A.G. Riddle"
+	},
+	{
+		"id": 22,
+		"name": "Angles of Attack (Frontlines)",
+		"author_id": 8,
+		"author_name": "Marko Kloos"
+	},
+	{
+		"id": 23,
+		"name": "Terms of Enlistment (Frontlines)",
+		"author_id": 8,
+		"author_name": "Marko Kloos"
+	},
+	{
+		"id": 24,
+		"name": "Lines of Departure (Frontlines)",
+		"author_id": 8,
+		"author_name": "Marko Kloos"
+	},
+	{
+		"id": 25,
+		"name": "The Martian",
+		"author_id": 9,
+		"author_name": "Andy Weir"
+	},
+	{
+		"id": 26,
+		"name": "Der Marsianer",
+		"author_id": 9,
+		"author_name": "Andy Weir"
+	}
+]

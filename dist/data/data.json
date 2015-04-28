@@ -1,0 +1,130 @@
+[
+    {
+        "categories": [
+            {
+                "id": 1,
+                "name": "Fantasy",
+                "category": "Genre"
+            },
+            {
+                "id": 2,
+                "name": "Mystery",
+                "category": "Genre"
+            },
+            {
+                "id": 3,
+                "name": "Science Fiction",
+                "category": "Genre"
+            }
+        ]
+    },
+    {
+        "authors": [
+            {
+                "id": 4,
+                "name": "James Patterson",
+                "category": "Author",
+                "genre": "Mystery",
+                "books": [
+                    "14th Deadly Sin",
+                    "Hope to Die",
+                    "NYPD Red 3"
+                ],
+                "category_id": 1
+            },
+            {
+                "id": 5,
+                "name": "Michael Connelly",
+                "category": "Author",
+                "genre": "Mystery",
+                "books": [
+                    "The Burning Room",
+                    "The Crossing",
+                    "A Darkness More Than Night"
+                ],
+                "category_id": 2
+            },
+            {
+                "id": "6",
+                "name": "Dick Francis",
+                "category": "Author",
+                "genre": "Mystery",
+                "books": [
+                    "Refusal",
+                    "Damage",
+                    "The Edge"
+                ],
+                "category_id": 3
+            }
+        ]
+    },
+    {
+        "books": [
+            {
+                "id": "7",
+                "name": "J.R.R Tolkien",
+                "category": "Author",
+                "genre": "Fantasy",
+                "books": [
+                    "The Hobbit; or, There and Back Again",
+                    "Unfinished Tales: The Lost Lore of Middle-earth",
+                    "The Lord of The Rings"
+                ]
+            },
+            {
+                "id": "8",
+                "name": "George R. R. Martin",
+                "category": "Author",
+                "genre": "Fantasy",
+                "books": [
+                    "A Game of Thrones",
+                    "A Clash of Kings",
+                    "A Dance with Dragons"
+                ]
+            },
+            {
+                "id": "9",
+                "name": "Brandon Sanderson",
+                "category": "Author",
+                "genre": "Fantasy",
+                "books": [
+                    "The Way of Kings",
+                    "Words of Radiance",
+                    "Mistborn"
+                ]
+            },
+            {
+                "id": "10",
+                "name": "A.G. Riddle",
+                "category": "Author",
+                "genre": "Science Fiction",
+                "books": [
+                    "The Atlantis Gene: A Thriller",
+                    "The Atlantis Plague: A Thriller",
+                    "Departure"
+                ]
+            },
+            {
+                "id": "11",
+                "name": "Marko Kloos",
+                "category": "Author",
+                "genre": "Science Fiction",
+                "books": [
+                    "Angles of Attack (Frontlines)",
+                    "Terms of Enlistment (Frontlines)",
+                    "Lines of Departure (Frontlines)"
+                ]
+            },
+            {
+                "id": "12",
+                "name": "Andy Weir",
+                "category": "Author",
+                "genre": "Science Fiction",
+                "books": [
+                    "The Martian",
+                    "Der Marsianer"
+                ]
+            }
+        ]
+    }
+]
