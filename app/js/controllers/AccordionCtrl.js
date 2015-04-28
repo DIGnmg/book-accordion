@@ -12,7 +12,7 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 				$scope.data = response;
 			});
 		} else {
-			return;
+			LibraryService.selectBook(data);
 		}
 	}
 
@@ -29,6 +29,7 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		$scope.animate = false;
 		LibraryService.getGenres().then(function(response){
 			$scope.animate = true;
+			$scope.selectedItem = LibraryService.getSelectedItem();
 			$scope.data = response;
 		});
 	}
@@ -48,13 +49,6 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		console.log($scope.activeTab);
 		$scope.data = response;
 	});
-	// DataResource.getCategories().then(function(response){
-	// 	$scope.animate = true;
-	// 	$scope.selectedItem = LibraryService.getSelectedItem();
-	// 	$scope.activeTab = LibraryService.getActiveTab();
-	// 	console.log($scope.activeTab);
-	// 	$scope.data = response.data;
-	// });
 };
 
 module.exports = AccordionCtrl;

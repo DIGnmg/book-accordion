@@ -23,6 +23,20 @@ var LibraryService = angular.module('LibraryService', [])
 		getSelectedItem: function(){
 			return this.selectedItem;
 		},
+		resetSelectedGenre: function(){
+			this.selectedItem = {
+				genre: {name:"Genre"},
+				author: {name:"Author"},
+				book: {name:"Book"}
+			}
+		},
+		resetSelectedAuthor: function() {
+			this.selectedItem.author = {name:"Author"};
+			this.selectedItem.book = {name:"Book"};
+		},
+		selectBook: function(data){
+			this.selectedItem[data.meta] = data;
+		},
 		getData: function (data){
 			var fn = DataResource[data.meta];
 			return fn().then(function(response){
@@ -40,12 +54,14 @@ var LibraryService = angular.module('LibraryService', [])
 		getGenres: function(){
 			return DataResource.getCategories().then(function(response){
 				this.setActiveTab(response.data[0].meta);
+				this.resetSelectedGenre();
 				return response.data;
 			}.bind(this));
 		},
 		getAuthors: function(){
 			return DataResource.getAuthors().then(function(response){
 				this.setActiveTab(response.data[0].meta);
+				this.resetSelectedAuthor();
 				return this.filterData(response.data, this.selectedItem.genre.id);
 			}.bind(this));
 		},

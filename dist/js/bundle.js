@@ -14,7 +14,7 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 				$scope.data = response;
 			});
 		} else {
-			return;
+			LibraryService.selectBook(data);
 		}
 	}
 
@@ -31,6 +31,7 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		$scope.animate = false;
 		LibraryService.getGenres().then(function(response){
 			$scope.animate = true;
+			$scope.selectedItem = LibraryService.getSelectedItem();
 			$scope.data = response;
 		});
 	}
@@ -50,13 +51,6 @@ var AccordionCtrl = function($scope, DataResource, LibraryService) {
 		console.log($scope.activeTab);
 		$scope.data = response;
 	});
-	// DataResource.getCategories().then(function(response){
-	// 	$scope.animate = true;
-	// 	$scope.selectedItem = LibraryService.getSelectedItem();
-	// 	$scope.activeTab = LibraryService.getActiveTab();
-	// 	console.log($scope.activeTab);
-	// 	$scope.data = response.data;
-	// });
 };
 
 module.exports = AccordionCtrl;
@@ -163,7 +157,7 @@ var app = angular.module('myApp', [ngAnimate, AccordionDirective.name, ItemDirec
 
 app.controller('AccordionCtrl', ['$scope', 'DataResource', 'LibraryService', AccordionCtrl]);
 
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_17f23970.js","/")
+}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_1023ce8.js","/")
 },{"./controllers/AccordionCtrl":1,"./directives/AccordionDirective":2,"./directives/ItemDirective":3,"./directives/ListDirective":4,"./services/LibraryService":6,"./services/RestResource":7,"Wb8Gej":15,"angular":11,"angular-animate":9,"buffer":12}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
@@ -191,6 +185,20 @@ var LibraryService = angular.module('LibraryService', [])
 		getSelectedItem: function(){
 			return this.selectedItem;
 		},
+		resetSelectedGenre: function(){
+			this.selectedItem = {
+				genre: {name:"Genre"},
+				author: {name:"Author"},
+				book: {name:"Book"}
+			}
+		},
+		resetSelectedAuthor: function() {
+			this.selectedItem.author = {name:"Author"};
+			this.selectedItem.book = {name:"Book"};
+		},
+		selectBook: function(data){
+			this.selectedItem[data.meta] = data;
+		},
 		getData: function (data){
 			var fn = DataResource[data.meta];
 			return fn().then(function(response){
@@ -208,12 +216,14 @@ var LibraryService = angular.module('LibraryService', [])
 		getGenres: function(){
 			return DataResource.getCategories().then(function(response){
 				this.setActiveTab(response.data[0].meta);
+				this.resetSelectedGenre();
 				return response.data;
 			}.bind(this));
 		},
 		getAuthors: function(){
 			return DataResource.getAuthors().then(function(response){
 				this.setActiveTab(response.data[0].meta);
+				this.resetSelectedAuthor();
 				return this.filterData(response.data, this.selectedItem.genre.id);
 			}.bind(this));
 		},
