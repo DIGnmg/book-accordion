@@ -75,9 +75,9 @@ gulp.task('views', function() {
   .pipe(gulp.dest('dist/'));
 
   // Any other view files from app/views
-  gulp.src('app/views/**/*')
+  gulp.src('app/templates/**/*')
   // Will be put in the dist/views folder
-  .pipe(gulp.dest('dist/views/'));
+  .pipe(gulp.dest('dist/templates/'));
 });
 
 gulp.task('api', function() {

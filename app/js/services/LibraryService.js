@@ -1,9 +1,9 @@
 /*globals angular, console */
 "use strict";
 
-var AccordionService = angular.module('AccordionService', [])
-.service('AccordionService', ['$http','$q', 'DataResource', function AccordionService($http, $q, DataResource) {
-	
+var LibraryService = angular.module('LibraryService', [])
+.service('LibraryService', ['$http','$q', 'DataResource', function LibraryService($http, $q, DataResource) {
+
 	return {
 		selectedCategory: {},
 		selectedAuthor: {},
@@ -19,8 +19,8 @@ var AccordionService = angular.module('AccordionService', [])
 			return selectedArray;
 		},
 		selectCategory: function (category) {
-			console.log('click', category);
 			this.selectedItem = category;
+			this.selectedCategory = category;
 			return DataResource.getAuthors(this.selectedItem.id).then(function(response){
 				return this.filterData(response.data, category.id);
 			}.bind(this));
@@ -29,8 +29,8 @@ var AccordionService = angular.module('AccordionService', [])
 			return this.selectedCategory;
 		},
 		selectAuthor: function(author){
-			console.log('click', author);
 			this.selectedItem = author;
+			this.selectedAuthor = author;
 			return DataResource.getBooks(this.selectedItem.id).then(function(response){
 				return this.filterData(response.data, author.id);
 			}.bind(this));
@@ -39,4 +39,4 @@ var AccordionService = angular.module('AccordionService', [])
 
 }]);
 
-module.exports = AccordionService;
+module.exports = LibraryService;

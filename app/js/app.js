@@ -6,8 +6,8 @@ var angular = require('angular');
 var AccordionCtrl = require('./controllers/AccordionCtrl');
 var AccordionDirective = require('./directives/AccordionDirective');
 var RestResource = require('./services/RestResource');
-var AccordionService = require('./services/AccordionService');
+var LibraryService = require('./services/LibraryService');
 
-var app = angular.module('myApp', [AccordionDirective.name, RestResource.name, AccordionService.name]);
+var app = angular.module('myApp', [AccordionDirective.name, RestResource.name, LibraryService.name]);
 
-app.controller('AccordionCtrl', ['$scope', 'DataResource', 'AccordionService', AccordionCtrl]);
+app.controller('AccordionCtrl', ['$scope', 'DataResource', 'LibraryService', AccordionCtrl]);
