@@ -3,34 +3,36 @@
 /*globals angular, console */
 "use strict";
 
-var TestCtrl = function($scope, DataResource, AccordionService) {
+var AccordionCtrl = function($scope, DataResource, AccordionService) {
 	$scope.testVar = 'We are up and running from a required module!';
 	$scope.customer = {
 		name: 'Naomi',
 		address: '1600 Amphitheatre'
 	};
 
-	$scope.getSelected = function (){
-		console.log(AccordionService.getSelectedCategory());
-	};
+	$scope.selectGenre = function (category){
+		console.log(category);
+		$scope.books = {};
+		AccordionService.selectCategory(category).then(function(response){
+			$scope.authors = response;
+		});
+		// $scope.getSelected();
+	}
+
+	$scope.selectAuthor = function(author) {
+		AccordionService.selectAuthor(author).then(function(response){
+			$scope.books = response;
+		});
+	}
 
 	DataResource.getCategories().then(function(response){
 		console.log(response);
 		$scope.data = response.data;
 	});
-	
-	$scope.getAuthors = function(){
-		DataResource.getAuthors().then(function (response) {
-			console.log(response);
-			$scope.authors = response.data;
-		});
-	};
-
-
 };
 
-module.exports = TestCtrl;
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/TestCtrl.js","/controllers")
+module.exports = AccordionCtrl;
+}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/AccordionCtrl.js","/controllers")
 },{"Wb8Gej":11,"buffer":8}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
@@ -40,30 +42,11 @@ var Accordion = angular.module('AccordionDirective', [])
 .directive('accordion', ['$document', 'DataResource', 'AccordionService' , function Accordion($document, DataResource, AccordionService) {
   return {
 		restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-		template: '<ul><li ng-click="clicked(data)" ng-repeat="data in data track by $index">Genre: {{data.name}}</li></ul> \
+		template: '<ul><li ng-click="selectGenre(data)" ng-repeat="data in data track by $index">Genre: {{data.name}}</li></ul> \
 					<div><ul><li ng-click="selectAuthor(author)" ng-repeat="author in authors track by $index">Author: {{author.name}}</li></ul></div> \
 					<div><ul><li ng-repeat="book in books track by $index">Book: {{book.name}}</li></ul></div>',
 		link: function($scope, el, iAttrs, controller) {
-
-			$scope.clicked = function (category){
-				console.log(category);
-				$scope.books = {};
-				AccordionService.select(category).then(function(response){
-					$scope.authors = response;
-				});
-				// $scope.getSelected();
-			}
-
-			$scope.selectAuthor = function(author) {
-				AccordionService.selectAuthor(author).then(function(response){
-					$scope.books = response;
-				});
-			}
-
-			$scope.getSelected = function (){
-				$scope.authors = AccordionService.getSelectedCategory();
-			}
-
+			
 			console.log('el', el);
 			console.log('controller', el);
 		}
@@ -79,42 +62,54 @@ module.exports = Accordion;
 
 var angular = require('angular');
 
-var TestCtrl = require('./controllers/TestCtrl');
+var AccordionCtrl = require('./controllers/AccordionCtrl');
 var AccordionDirective = require('./directives/AccordionDirective');
 var RestResource = require('./services/RestResource');
 var AccordionService = require('./services/AccordionService');
 
-console.log(AccordionDirective.name);
-console.log(RestResource.name);
-console.log(AccordionService.name);
-
 var app = angular.module('myApp', [AccordionDirective.name, RestResource.name, AccordionService.name]);
 
-app.controller('TestCtrl', ['$scope', 'DataResource', 'AccordionService', TestCtrl]);
+app.controller('AccordionCtrl', ['$scope', 'DataResource', 'AccordionService', AccordionCtrl]);
 
-}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_4aa9be59.js","/")
-},{"./controllers/TestCtrl":1,"./directives/AccordionDirective":2,"./services/AccordionService":4,"./services/RestResource":5,"Wb8Gej":11,"angular":7,"buffer":8}],4:[function(require,module,exports){
+}).call(this,require("Wb8Gej"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_4de69cb2.js","/")
+},{"./controllers/AccordionCtrl":1,"./directives/AccordionDirective":2,"./services/AccordionService":4,"./services/RestResource":5,"Wb8Gej":11,"angular":7,"buffer":8}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*globals angular, console */
 "use strict";
 
 var AccordionService = angular.module('AccordionService', [])
 .service('AccordionService', ['$http','$q', 'DataResource', function AccordionService($http, $q, DataResource) {
+	
 	return {
 		selectedCategory: {},
 		selectedAuthor: {},
-		select: function (category) {
+		selectedItem: {},
+		filterData: function(dataset, id){
+			var selectedArray = []; 
+			angular.forEach(dataset, function (data) {
+				if (data.category_id === id){
+					selectedArray.push(data);
+				}
+				console.log(selectedArray);
+			});
+			return selectedArray;
+		},
+		selectCategory: function (category) {
 			console.log('click', category);
-			this.selectedCategory = category;
-			return DataResource.getAuthors(this.selectedCategory.id);
+			this.selectedItem = category;
+			return DataResource.getAuthors(this.selectedItem.id).then(function(response){
+				return this.filterData(response.data, category.id);
+			}.bind(this));
 		},
 		getSelectedCategory: function () {
 			return this.selectedCategory;
 		},
 		selectAuthor: function(author){
 			console.log('click', author);
-			this.selectedAuthor = author;
-			return DataResource.getBooks(this.selectedAuthor.id);
+			this.selectedItem = author;
+			return DataResource.getBooks(this.selectedItem.id).then(function(response){
+				return this.filterData(response.data, author.id);
+			}.bind(this));
 		}
 	};
 
@@ -130,27 +125,6 @@ module.exports = AccordionService;
 var RestResource = angular.module('RestResource', [])
 .service('DataResource', ['$http','$q', function RestResource($http, $q) {
 	
-	var filterAuthors = function(dataset, categoryId){
-		var selectedAuthors = []; 
-		angular.forEach(dataset, function (data) {
-			if (data.category_id === categoryId){
-				selectedAuthors.push(data);
-			}
-			console.log(selectedAuthors);
-		});
-		return selectedAuthors;
-	}
-	var filterBooks = function(dataset, authorId){
-		var selectedBooks = []; 
-		angular.forEach(dataset, function (data) {
-			if (data.author_id === authorId){
-				selectedBooks.push(data);
-			}
-			console.log(selectedBooks);
-		});
-		return selectedBooks;
-	}
-
 	return {
 		getCategories: function () {
 		  return $http({
@@ -158,20 +132,16 @@ var RestResource = angular.module('RestResource', [])
 		    url: '/data/categories.json'
 		  });
 		},
-		getAuthors: function (categoryId) {
+		getAuthors: function () {
 			return $http({
 				method: 'GET',
 				url: '/data/authors.json'
-			}).then(function(response){
-				return filterAuthors(response.data, categoryId);
 			});
 		},
-		getBooks: function(authorId){
+		getBooks: function(){
 			return $http({
 				method: 'GET',
 				url: '/data/books.json'
-			}).then(function(response){
-				return filterBooks(response.data, authorId);
 			});
 		}
 	};
